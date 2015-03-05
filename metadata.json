@@ -1,0 +1,12 @@
+{
+  "name": "puppetfinland-dns",
+  "version": "0.2.0",
+  "author": "Puppet-Finland team",
+  "license": "BSD license",
+  "summary": "Manage generic DNS settings",
+  "source": "https://github.com/Puppet-Finland/dns.git",
+  "project_page": "https://github.com/Puppet-Finland/dns",
+  "dependencies": [
+    { "name": "puppetfinland/packetfilter", "version_requirement": ">= 0.5.0" },
+  ]
+}
