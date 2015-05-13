@@ -27,12 +27,12 @@ class dns::packetfilter
     $source_v4 = $allow_address_ipv4 ? {
         'any' => undef,
         default => $allow_address_ipv4,
-     }
+    }
 
     $source_v6 = $allow_address_ipv6 ? {
         'any' => undef,
         default => $allow_address_ipv6,
-     }
+    }
 
     # Resource defaults
     Firewall {
@@ -42,30 +42,30 @@ class dns::packetfilter
     }
 
     # UDP rules
-    firewall { "007 ipv4 accept udp dns":
+    firewall { '007 ipv4 accept udp dns':
         provider => 'iptables',
-        proto => 'udp',
-        source => $source_v4,
+        proto    => 'udp',
+        source   => $source_v4,
     }
 
-    firewall { "007 ipv6 accept udp dns":
+    firewall { '007 ipv6 accept udp dns':
         provider => 'ip6tables',
-        proto => 'udp',
-        source => $source_v6,
+        proto    => 'udp',
+        source   => $source_v6,
     }
 
     # TCP rules
     if $allow_tcp == 'yes' {
-        firewall { "007 ipv4 accept tcp dns":
+        firewall { '007 ipv4 accept tcp dns':
             provider => 'iptables',
-            proto => 'tcp',
-            source => $source_v4,
+            proto    => 'tcp',
+            source   => $source_v4,
         }
 
-        firewall { "007 ipv6 accept tcp dns":
+        firewall { '007 ipv6 accept tcp dns':
             provider => 'ip6tables',
-            proto => 'tcp',
-            source => $source_v6,
+            proto    => 'tcp',
+            source   => $source_v6,
         }
     }
 }
