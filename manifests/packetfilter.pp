@@ -8,7 +8,7 @@
 #
 # [*allow_tcp*]
 #   Allow DNS requests to TCP port 53. This may be necessary for many reasons 
-#   (DNSSec, zone transfers, IPv6). Valid values are 'yes' (default) and 'no'.
+#   (DNSSec, zone transfers, IPv6). Valid values are true (default) and false.
 # [*allow_address_ipv4*]
 #   An IPv4 address or subnet from which to allow connections.
 # [*allow_address_ipv6*]
@@ -16,9 +16,9 @@
 #
 class dns::packetfilter
 (
-    $allow_tcp = 'yes',
-    $allow_address_ipv4,
-    $allow_address_ipv6
+    Boolean $allow_tcp = true,
+    String $allow_address_ipv4,
+    String $allow_address_ipv6
 
 ) inherits dns::params
 {
@@ -55,17 +55,23 @@ class dns::packetfilter
     }
 
     # TCP rules
-    if $allow_tcp == 'yes' {
-        firewall { '007 ipv4 accept tcp dns':
-            provider => 'iptables',
-            proto    => 'tcp',
-            source   => $source_v4,
-        }
+    $tcp_ensure = $allow_tcp ? {
+        true    => 'present',
+        false   => 'absent',
+        default => undef,
+    }
 
-        firewall { '007 ipv6 accept tcp dns':
-            provider => 'ip6tables',
-            proto    => 'tcp',
-            source   => $source_v6,
-        }
+    firewall { '007 ipv4 accept tcp dns':
+        ensure   => $tcp_ensure,
+        provider => 'iptables',
+        proto    => 'tcp',
+        source   => $source_v4,
+    }
+
+    firewall { '007 ipv6 accept tcp dns':
+        ensure   => $tcp_ensure,
+        provider => 'ip6tables',
+        proto    => 'tcp',
+        source   => $source_v6,
     }
 }
