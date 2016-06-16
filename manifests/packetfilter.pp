@@ -36,9 +36,10 @@ class dns::packetfilter
 
     # Resource defaults
     Firewall {
-        chain => 'INPUT',
+        ensure => 'present',
+        chain  => 'INPUT',
         action => 'accept',
-        dport => 53,
+        dport  => 53,
     }
 
     # UDP rules
