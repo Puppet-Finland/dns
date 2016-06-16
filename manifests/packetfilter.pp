@@ -17,8 +17,8 @@
 class dns::packetfilter
 (
     Boolean $allow_tcp = true,
-    String $allow_address_ipv4,
-    String $allow_address_ipv6
+    String $allow_address_ipv4 = '127.0.0.1',
+    String $allow_address_ipv6 = '::1'
 
 ) inherits dns::params
 {
